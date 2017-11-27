@@ -1,2 +1,37 @@
-SunriseSunsetControl
-====================
+sunrise
+
+Utility to calculate sunrise and sunset times.
+
+Core code was found on source forge: see citations in code.
+
+Typical use with the at utility that might be run at midday using cron.
+
+$ at -f script `sunrise -et "%H:%M" -h -1` 
+
+ 	This will run script at one hour before sunset.
+
+Output of sunrise -u
+
+
+Usage:
+ sunrise [options]
+prints sunrise/sunset times for today
+options modify behaviour thus:
+ -b		begining of day. Print sunrise time
+ -e		end of day. Print sunset time
+ -t "format"	Print time using strftime format strings
+ -s		silent or status print nothing
+   		return value = 0-daylight 1-darkness
+ -h offset	hour offset. Use to test for time before/after  sunrise/set
+   		e.g.  sunset -sh 1 will return 1 until one hour after sunrise
+   		then 0, changing to 1, one hour after sunset
+ -d day		specify day
+ -m month	specify month
+ -y year	specify year
+ -l lat		specify latitude
+ -o lon		specify longitude
+ -u		print this usage text
+
+ 
+
+colege@gmail.com
