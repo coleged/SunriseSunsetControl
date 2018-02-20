@@ -2,7 +2,7 @@
 
 Copyright (GPL) 2004   Mike Chirico mchirico@comcast.net
    Updated: Sun Nov 28 15:15:05 EST 2004
-   Reevised: Nov 2017
+   Revised: Nov 2017
 
    Program adapted by Mike Chirico mchirico@comcast.net
 
@@ -26,7 +26,7 @@ Copyright (GPL) 2004   Mike Chirico mchirico@comcast.net
 ************************************************************/
 
 #ifndef DEBUG
-#define DEBUG 0
+#define DEBUG 1
 #endif
 
 
@@ -354,7 +354,7 @@ int main(int argc, char **argv)
   int month = today->tm_mon + 1;
   int day = today->tm_mday;
   int dst=-1;
-  int hm;
+  time_t hm;
 
   char buffer[30];
 
@@ -422,6 +422,10 @@ int main(int argc, char **argv)
 	    usage();
 	    break;
 
+	default : //
+	    usage();
+	    break;
+
 	}
    }// while
 
@@ -447,8 +451,10 @@ int main(int argc, char **argv)
   seconds = mktime(&tm);	// clean up tm fields
 				// including isdst
 				// seconds at SOD
+				
+  if(DEBUG) printf("Seconds at SOD %lis\n",seconds);
 
-  int delta;
+  time_t delta;
 
   dst=tm.tm_isdst;
 
@@ -457,12 +463,12 @@ int main(int argc, char **argv)
   delta = ptm->tm_hour;   // this will nudge the hour if DST is in effect
 
   if(DEBUG)
-    printf("delta=%d dst=%d\n",delta,dst);
+    printf("delta=%lis dst=%d\n",delta,dst);
   
   tseconds = seconds;
 
   if(DEBUG){
-   printf("Number of seconds %ld\n",seconds);
+   printf("Number of seconds now %ld\n",seconds);
    strftime(buffer,30,time_fmt,localtime(&now));
    printf("%s\n",buffer);
   }
@@ -470,11 +476,14 @@ int main(int argc, char **argv)
 
   // calculate sunrise time
   seconds = seconds + calcSunriseUTC( JD,  latitude,  longitude)*60;
+  if(DEBUG) printf("Sunrise %lis\n",seconds);
   // adjust for DST and hour modifier from command line args
-  seconds = seconds - delta*3600 + hm*3600;
+  if(DEBUG) printf("delta %lis, hm %lis\n",delta, ((time_t)hm)*3600);
+  seconds = seconds - (time_t)delta*3600 + (time_t)hm*3600;
+  if(DEBUG) printf("Sunrise (adjusted) %lis\n",seconds);
 
   strftime(buffer,30,time_fmt,localtime(&seconds));
-  if(!s_flag && rise) printf("%s\n",buffer);
+  if(!s_flag && rise) printf("%s (%lis)\n",buffer,seconds-now);
   if ( now > seconds ) dark = 0;
 
 
@@ -483,10 +492,11 @@ int main(int argc, char **argv)
 
   seconds+=calcSunsetUTC( JD,  latitude,  longitude)*60;
   seconds= seconds - delta*3600 + hm*3600;
+  if(DEBUG) printf("Sunset %lis\n",seconds);
 
   strftime(buffer,30,time_fmt,localtime(&seconds));
   
-  if(!s_flag && set) printf("%s\n",buffer);
+  if(!s_flag && set) printf("%s (%lis)\n",buffer,seconds-now);
   if ( now > seconds ) dark = 1;
 
   if( s_flag ){
