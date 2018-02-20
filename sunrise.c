@@ -10,6 +10,8 @@ Copyright (GPL) 2004   Mike Chirico mchirico@comcast.net
 		No changes to sunrise/set calculations
 		Improvements/additions to utility elements of the tool
 
+		Tested on MAC OS (High Sierra and Ubuntu 17)
+
    Reference:
     http://prdownloads.sourceforge.net/souptonuts/working_with_time.tar.gz?download
     http://www.srrb.noaa.gov/highlights/sunrise/sunrise.html
@@ -26,7 +28,7 @@ Copyright (GPL) 2004   Mike Chirico mchirico@comcast.net
 ************************************************************/
 
 #ifndef DEBUG
-#define DEBUG 1
+#define DEBUG 0 // dont change this - pass it via -D in Makefile
 #endif
 
 
@@ -483,7 +485,7 @@ int main(int argc, char **argv)
   if(DEBUG) printf("Sunrise (adjusted) %lis\n",seconds);
 
   strftime(buffer,30,time_fmt,localtime(&seconds));
-  if(!s_flag && rise) printf("%s (%lis)\n",buffer,seconds-now);
+  if(!s_flag && rise) printf("%s\n",buffer);
   if ( now > seconds ) dark = 0;
 
 
@@ -496,7 +498,7 @@ int main(int argc, char **argv)
 
   strftime(buffer,30,time_fmt,localtime(&seconds));
   
-  if(!s_flag && set) printf("%s (%lis)\n",buffer,seconds-now);
+  if(!s_flag && set) printf("%s\n",buffer);
   if ( now > seconds ) dark = 1;
 
   if( s_flag ){
