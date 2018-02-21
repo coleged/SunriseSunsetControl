@@ -9,6 +9,8 @@ Typical use with the at utility that might be run at midday using cron.
 $ at -f script `sunrise -et "%H:%M" -h -1` 
 
  	This will run script at one hour before sunset.
+See lush.sh and lushscpt.sh for iexample framework that uses lumin 
+to shedule Luton lighting control events.
 
 Output of sunrise -u
 
