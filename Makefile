@@ -24,3 +24,6 @@ $(TARGET): $(OBJECTS)
 clean:
 	-rm -f *.o
 	-rm -f $(TARGET)
+
+install:
+	-cp $(TARGET) /usr/local/bin

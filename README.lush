@@ -2,14 +2,14 @@
 Lush, Lutron Sheduler
 
 This is a simple bourne script that is run by cron once a day to shedule a
-job at or near sunset that uses lumin to switch lights on.
+job at or near sunset that uses lutrond/lutctrl to switch lights on.
 
 lush.sh is the script run by cron in the middle of the day.
 
 It uses sunrise to determin sunset time for the day and envokes at to run
 lushscrpt.sh at the prescribed time.
 
-lushscrpt.sh runs lumin to command the Lutron lighting system.
+lushscrpt.sh runs lutctrl/lutrond to command the Lutron lighting system.
 
 My cron entry looks like this (runs at 10:55 every day)
 

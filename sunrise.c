@@ -10,7 +10,7 @@ Copyright (GPL) 2004   Mike Chirico mchirico@comcast.net
 		No changes to sunrise/set calculations
 		Improvements/additions to utility elements of the tool
 
-		Tested on MAC OS (High Sierra and Ubuntu 17)
+		Tested on MAC OS (High Sierra) and Ubuntu 17
 
    Reference:
     http://prdownloads.sourceforge.net/souptonuts/working_with_time.tar.gz?download
@@ -28,9 +28,8 @@ Copyright (GPL) 2004   Mike Chirico mchirico@comcast.net
 ************************************************************/
 
 #ifndef DEBUG
-#define DEBUG 0 // dont change this - pass it via -D in Makefile
+#define DEBUG 0 // dont change this - pass it via -DDEBUG=0 at compile
 #endif
-
 
 #include <sys/time.h>
 #include <time.h>
@@ -40,9 +39,11 @@ Copyright (GPL) 2004   Mike Chirico mchirico@comcast.net
 #include <math.h>
 #include <string.h>
 
+// Put your latitude and longitude in here
 // lat/log for Bath,UK
 #define DEF_LAT  51.38 
 #define DEF_LON  2.36
+
 #define MY_NAME "sunrise"
 #define TIME_FMT "%d-%m-%Y  %T"  // day-month-year time
 
@@ -341,7 +342,7 @@ int main(int argc, char **argv)
 
   time_t now;
   time_t seconds;
-  time_t tseconds;
+  time_t tseconds; // temporary
   struct tm  *ptm=NULL;
   struct tm *today = NULL;
   struct tm  tm;
@@ -397,7 +398,7 @@ int main(int argc, char **argv)
 	   break;
 
            case 'h': // hour offset modifier
-		hm = atoi(optarg);
+		hm = (time_t)atoi(optarg);
 	   break;
 
           case 'y': // 

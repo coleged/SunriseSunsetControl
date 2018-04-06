@@ -1,6 +1,6 @@
 #!/bin/sh
 # 
-#	lush.sh   -  lumin sheduler (Lutron Lighting control)
+#	lush.sh   -  lutrond sheduler (Lutron Lighting control)
 #
 #	Use in conjunction with sunrise to shedule events based on
 #	sunrise/set times
